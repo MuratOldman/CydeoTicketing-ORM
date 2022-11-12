@@ -1,15 +1,22 @@
 package com.example.service;
 
 
-
 import com.example.dto.UserDTO;
+import com.example.entity.User;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface UserService extends CrudService<UserDTO, String> {
+public interface UserService {
+    List<UserDTO> listAllUsers();
 
-    List<UserDTO> findManagers();
+   UserDTO findByUserName(String userName);
 
-    List<UserDTO> findEmployees();
+   void save(UserDTO userDTO);
+
+   UserDTO update(UserDTO userDTO);
+
+   void deleteByUserName(UserDTO userDTO);
+
 
 }
