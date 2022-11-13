@@ -31,4 +31,10 @@ public class BaseEntity {
         this.lastUpdateUserId=2L;
     }
 
+    @PreUpdate
+    public void onPreUpdate(){
+        this.lastUpdateDateTime=LocalDateTime.now();
+        this.lastUpdateUserId=1L;
+    }
+
 }
