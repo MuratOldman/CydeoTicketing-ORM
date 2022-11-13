@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteByUserName(UserDTO userDTO) {
-
+    public void deleteByUserName(String userName) {
+        userRepository.deleteByUserName(userName);
     }
 }
