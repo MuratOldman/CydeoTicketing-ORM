@@ -9,7 +9,7 @@ import javax.persistence.Table;
 public interface UserRepository extends JpaRepository<User,Long> {
 
     User findByUserName(String userName);
-    @Transactional
+
     void deleteByUserName(String userName);
 
 }

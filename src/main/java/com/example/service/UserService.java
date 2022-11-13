@@ -18,5 +18,7 @@ public interface UserService {
 
    void deleteByUserName(String userName);
 
+   void delete(String userName);
+
 
 }
