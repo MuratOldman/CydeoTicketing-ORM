@@ -2,6 +2,7 @@ package com.example.service;
 
 import com.example.dto.ProjectDTO;
 import com.example.entity.Project;
+import com.example.entity.User;
 
 import java.util.List;
 
@@ -14,4 +15,6 @@ public interface ProjectService {
     void complete(String code);
 
     List<ProjectDTO> listAllProjectDetails();
+    List<ProjectDTO> readAllByAssignedManager(User assignedManager);
+
 }

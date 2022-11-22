@@ -2,8 +2,7 @@ package com.example.service;
 
 
 import com.example.dto.UserDTO;
-import com.example.entity.User;
-import org.springframework.data.jpa.repository.JpaRepository;
+
 
 import java.util.List;
 

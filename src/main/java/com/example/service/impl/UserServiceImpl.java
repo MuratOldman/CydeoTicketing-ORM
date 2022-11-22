@@ -1,10 +1,15 @@
 package com.example.service.impl;
 
+import com.example.dto.ProjectDTO;
+import com.example.dto.TaskDTO;
 import com.example.dto.UserDTO;
 import com.example.entity.User;
 import com.example.mapper.UserMapper;
 import com.example.repository.UserRepository;
+import com.example.service.ProjectService;
+import com.example.service.TaskService;
 import com.example.service.UserService;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,10 +22,14 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final ProjectService projectService;
+    private final TaskService taskService;
 
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, @Lazy ProjectService projectService, TaskService taskService) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
+        this.projectService = projectService;
+        this.taskService = taskService;
     }
 
     @Override
@@ -61,6 +70,20 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByUserName(userName);
         user.setIsDeleted(true);
         userRepository.save(user);
+    }
+    private boolean checkIfUserCanBeDeleted(User user) {
+
+        switch (user.getRole().getDescription()) {
+            case "Manager":
+                List<ProjectDTO> projectDTOList = projectService.readAllByAssignedManager(user);
+                return projectDTOList.size() == 0;
+            case "Employee":
+                List<TaskDTO> taskDTOList = taskService.readAllByAssignedEmployee(user);
+                return taskDTOList.size() == 0;
+            default:
+                return true;
+        }
+
     }
 
     @Override
