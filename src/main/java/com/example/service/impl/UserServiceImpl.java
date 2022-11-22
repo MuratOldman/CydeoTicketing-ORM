@@ -68,8 +68,12 @@ public class UserServiceImpl implements UserService {
         // I am not trying to delete anything
         // I just need to change flag and keep data in database
         User user = userRepository.findByUserName(userName);
-        user.setIsDeleted(true);
-        userRepository.save(user);
+        if(checkIfUserCanBeDeleted(user)){
+            user.setIsDeleted(true);
+            user.setUserName(user.getUserName() + "-" + user.getId());
+            userRepository.save(user);
+        }
+
     }
     private boolean checkIfUserCanBeDeleted(User user) {
 
